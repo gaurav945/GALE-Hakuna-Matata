@@ -18,9 +18,31 @@ $(document).ready(function(){
 
     var URL = $('#id_url_hidden_input').val();
 
-    $(document).on('click', '.individual_uc', function(){
+    $(document).on('click', '.individual_uc', function(e){
+        e.preventDefault();
         var browser = $('#id_browser_usecases').find(":selected").val();
-        $(this).attr('href', $(this).attr('href').split('&')[0] + '&' + browser);
+
+        var url = $(this).attr('href').split('&')[0] + '&' + browser;
+
+        $.ajax({
+            type: 'GET',
+            headers: {
+                "access-control-allow-origin": origin,
+                "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "access-control-allow-headers": "content-type, accept"
+            },
+            url: url,
+            crossDomain: true,
+            beforeSend: function () {
+                console.log('');
+            },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function () {
+                console.log('');
+            }
+        })
     });
 
     $(document).on('click', '.run-job', function(){
